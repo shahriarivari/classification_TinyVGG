@@ -8,12 +8,13 @@ from torch.utils.data import DataLoader
 
 num_workers = os.cpu_count()
 
+
 def create_dataloaders(
-        train_dir: str,
-        test_dir: str,
-        transform: transforms.Compose,
-        batch_size: int,
-        num_workers: int= num_workers
+    train_dir: str,
+    test_dir: str,
+    transform: transforms.Compose,
+    batch_size: int,
+    num_workers: int = num_workers,
 ):
     """ Creats training and  testing Dataloaders.
     Takes in a training directory and testing directory path and turns
@@ -36,10 +37,10 @@ def create_dataloaders(
                                 batch_size=32,
                                 num_workers=4)
   """
-    
+
     # use ImageFolder to create datasets
-    train_data = datasets.ImageFolder(train_dir, transform = transform)
-    test_data = datasets.ImageFolder(test_dir , transform = transform)
+    train_data = datasets.ImageFolder(train_dir, transform=transform)
+    test_data = datasets.ImageFolder(test_dir, transform=transform)
 
     # get class names
     class_names = train_data.classes
@@ -47,9 +48,9 @@ def create_dataloaders(
     # turn images into DataLoaders
     train_dataloader = DataLoader(
         train_data,
-        batch_size= batch_size,
+        batch_size=batch_size,
         shuffle=True,
-        num_workers= num_workers,
+        num_workers=num_workers,
         pin_memory=True,
     )
 
@@ -57,8 +58,8 @@ def create_dataloaders(
         test_data,
         batch_size=batch_size,
         shuffle=True,
-        num_workers= num_workers,
+        num_workers=num_workers,
         pin_memory=True,
     )
 
-    return train_dataloader , test_dataloader , class_names
+    return train_dataloader, test_dataloader, class_names
