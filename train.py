@@ -11,7 +11,7 @@ from pathlib import Path
 if __name__ == "__main__":
     # setup hyperparameters
     NUM_EPOCHS = 5
-    BATCH_SIZE = 32
+    BATCH_SIZE = 8
     HIDDEN_UNITS = 10
     LEARNING_RATE = 0.001
 
@@ -33,6 +33,7 @@ if __name__ == "__main__":
         test_dir=test_dir,
         transform=data_trasnform,
         batch_size=BATCH_SIZE,
+        num_workers=1,
     )
 
     # create model using model_builder.py

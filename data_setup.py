@@ -6,15 +6,13 @@ import os
 from torchvision import datasets, transforms
 from torch.utils.data import DataLoader
 
-num_workers = os.cpu_count()
-
 
 def create_dataloaders(
     train_dir: str,
     test_dir: str,
     transform: transforms.Compose,
     batch_size: int,
-    num_workers: int = num_workers,
+    num_workers: int,
 ):
     """ Creats training and  testing Dataloaders.
     Takes in a training directory and testing directory path and turns
