@@ -26,7 +26,7 @@ class TinyVGG(nn.Module):
                 out_channels=hidden_units,
                 kernel_size=3,
                 stride=1,
-                padding=0,
+                padding=1,
             ),
             nn.ReLU(),
             nn.Conv2d(
@@ -34,7 +34,7 @@ class TinyVGG(nn.Module):
                 out_channels=hidden_units,
                 kernel_size=3,
                 stride=1,
-                padding=0,
+                padding=1,
             ),
             nn.ReLU(),
             nn.MaxPool2d(kernel_size=2, stride=2),
@@ -46,7 +46,7 @@ class TinyVGG(nn.Module):
                 out_channels=hidden_units,
                 kernel_size=3,
                 stride=1,
-                padding=0,
+                padding=1,
             ),
             nn.ReLU(),
             nn.Conv2d(
@@ -54,14 +54,14 @@ class TinyVGG(nn.Module):
                 out_channels=hidden_units,
                 kernel_size=3,
                 stride=1,
-                padding=0,
+                padding=1,
             ),
             nn.ReLU(),
             nn.MaxPool2d(2),
         )
         self.classifier = nn.Sequential(
             nn.Flatten(),
-            nn.Linear(in_features=hidden_units * 13 * 13, out_features=output_shape),
+            nn.Linear(in_features=hidden_units * 16 * 16, out_features=output_shape),
         )
 
     def forward(self, x: torch.Tensor):

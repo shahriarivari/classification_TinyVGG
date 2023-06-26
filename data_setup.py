@@ -37,27 +37,34 @@ def create_dataloaders(
   """
 
     # use ImageFolder to create datasets
-    train_data = datasets.ImageFolder(train_dir, transform=transform)
-    test_data = datasets.ImageFolder(test_dir, transform=transform)
+    train_data = datasets.ImageFolder(root=train_dir, transform=transform)
+    test_data = datasets.ImageFolder(root=test_dir, transform=transform)
 
     # get class names
     class_names = train_data.classes
 
+    # some print statements
+    print(f"Train data:\n{train_data}\nTest data\n{test_data}")
+    print(f"class names are {class_names}")
+
     # turn images into DataLoaders
     train_dataloader = DataLoader(
-        train_data,
+        dataset=train_data,
         batch_size=batch_size,
         shuffle=True,
         num_workers=num_workers,
-        pin_memory=True,
+        pin_memory=False,
     )
 
     test_dataloader = DataLoader(
-        test_data,
+        dataset=test_data,
         batch_size=batch_size,
-        shuffle=True,
+        shuffle=False,
         num_workers=num_workers,
-        pin_memory=True,
+        pin_memory=False,
     )
+
+    # some print sataments
+    print(f"train and test data loaders are created")
 
     return train_dataloader, test_dataloader, class_names

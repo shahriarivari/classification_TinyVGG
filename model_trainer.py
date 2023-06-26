@@ -2,7 +2,7 @@
 Contains functions for training and testing a PyTorch model.
 """
 import torch
-from tqdm.auto import tqdm
+from tqdm import tqdm
 from typing import Dict, List, Tuple
 
 
@@ -167,9 +167,12 @@ def train(
             optimizer=optimizer,
             device=device,
         )
+        print(f"Train step is performed for epoch{epoch+1}\n")
+
         test_loss, test_acc = test_step(
             model=model, data_loader=test_dataloader, loss_fn=loss_fn, device=device
         )
+        print(f"Test step is performed for epoch{epoch+1}\n")
 
         # Print out what's happening
         print(
