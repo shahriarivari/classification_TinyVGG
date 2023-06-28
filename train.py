@@ -14,7 +14,8 @@ NUM_EPOCHS = 5
 BATCH_SIZE = 128
 HIDDEN_UNITS = 10
 LEARNING_RATE = 0.001
-NUM_WORKERS = 1
+# set NUM_WORKERS to 0 , DataLoaders uses multiprocessing and vscode throws errors, see https://github.com/microsoft/ptvsd/issues/2129
+NUM_WORKERS = 0
 
 # setup directories
 train_dir = Path("data/") / "cats_dogs" / "train"
@@ -80,4 +81,4 @@ print(f" Traing is done")
 # save the model using utils.py
 utils.save_model(model=model, target_dir="models", model_name="TinyVGG_model0.pth")
 
-plot_loss_curves(model_results)
+plot_loss_curves.plot_loss_curves(model_results)
