@@ -78,6 +78,7 @@ model_results = model_trainer.train(
     device=device,
 )
 print(f" Traing is done")
+
 # save the model using utils.py
 utils.save_model(model=model, target_dir="models", model_name="TinyVGG_model0.pth")
 
