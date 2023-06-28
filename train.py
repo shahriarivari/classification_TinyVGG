@@ -4,9 +4,10 @@ Trains a PyTorch image classification model using device-agnostic code.
 
 import os
 import torch
-import data_setup, model_builder, model_trainer, utils
+import data_setup, model_builder, model_trainer, utils, plot_loss_curves
 from torchvision import transforms
 from pathlib import Path
+from torchinfo import summary
 
 # setup hyperparameters
 NUM_EPOCHS = 5
@@ -24,7 +25,7 @@ device = "cuda" if torch.cuda.is_available() else "cpu"
 print(f" The target  device is {device}")
 
 # creat transforms
-data_trasnform = transforms.Compose(
+data_transform = transforms.Compose(
     [transforms.Resize((64, 64)), transforms.ToTensor()]
 )
 
@@ -32,7 +33,7 @@ data_trasnform = transforms.Compose(
 train_dataloader, test_dataloader, class_names = data_setup.create_dataloaders(
     train_dir=train_dir,
     test_dir=test_dir,
-    transform=data_trasnform,
+    transform=data_transform,
     batch_size=BATCH_SIZE,
     num_workers=NUM_WORKERS,
 )
@@ -58,7 +59,6 @@ print(f"Output prediction label:\n{torch.argmax(torch.softmax(pred, dim= 1),dim=
 print(f"Actual label:\n{label_single}")
 
 # use torchinfo to get an idea of the shapes going through our model
-from torchinfo import summary
 
 summary(model, input_size=[1, 3, 64, 64])
 
@@ -67,7 +67,7 @@ loss_fn = torch.nn.CrossEntropyLoss()
 optimizer = torch.optim.Adam(model.parameters(), lr=LEARNING_RATE)
 
 # start training using model model_trainer.py
-model_trainer.train(
+model_results = model_trainer.train(
     model=model,
     train_dataloader=train_dataloader,
     test_dataloader=test_dataloader,
@@ -79,3 +79,5 @@ model_trainer.train(
 print(f" Traing is done")
 # save the model using utils.py
 utils.save_model(model=model, target_dir="models", model_name="TinyVGG_model0.pth")
+
+plot_loss_curves(model_results)
